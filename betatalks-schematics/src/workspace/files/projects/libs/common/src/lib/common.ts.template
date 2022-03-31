@@ -1,0 +1,4 @@
+export class Common {
+  // use this library to add modules for commonly used building blocks
+  name = 'Common';
+}

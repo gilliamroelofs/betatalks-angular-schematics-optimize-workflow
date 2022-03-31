@@ -1,0 +1,4 @@
+export class Util {
+  // use this library to add modules for utilities
+  name = 'Util';
+}

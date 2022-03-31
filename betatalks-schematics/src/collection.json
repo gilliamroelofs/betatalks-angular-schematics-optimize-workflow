@@ -1,0 +1,13 @@
+{
+  "$schema": "../node_modules/@angular-devkit/schematics/collection-schema.json",
+  "schematics": {
+    "workspace": {
+      "description": "A complete betatalks workspace.",
+      "factory": "./workspace/index#workspace"
+    },
+    "feature": {
+      "description": "A feature module.",
+      "factory": "./feature/index#feature"
+    }
+  }
+}

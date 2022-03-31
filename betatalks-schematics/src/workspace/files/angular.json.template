@@ -1,0 +1,233 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "newProjectRoot": "projects",
+  "projects": {
+    "<%= dasherize(name) %>": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        },
+        "@schematics/angular:application": {
+          "strict": true
+        }
+      },
+      "root": "projects/<%= dasherize(name) %>",
+      "sourceRoot": "projects/<%= dasherize(name) %>/src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/<%= dasherize(name) %>",
+            "index": "projects/<%= dasherize(name) %>/src/index.html",
+            "main": "projects/<%= dasherize(name) %>/src/main.ts",
+            "polyfills": "projects/<%= dasherize(name) %>/src/polyfills.ts",
+            "tsConfig": "projects/<%= dasherize(name) %>/tsconfig.app.json",
+            "inlineStyleLanguage": "scss",
+            "assets": [
+              "projects/<%= dasherize(name) %>/src/favicon.ico",
+              "projects/<%= dasherize(name) %>/src/assets"
+            ],
+            "styles": [
+              "projects/<%= dasherize(name) %>/src/styles.scss"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kb",
+                  "maximumError": "1mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "2kb",
+                  "maximumError": "4kb"
+                }
+              ],
+              "fileReplacements": [
+                {
+                  "replace": "projects/<%= dasherize(name) %>/src/environments/environment.ts",
+                  "with": "projects/<%= dasherize(name) %>/src/environments/environment.prod.ts"
+                }
+              ],
+              "outputHashing": "all"
+            },
+            "development": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "configurations": {
+            "production": {
+              "browserTarget": "<%= dasherize(name) %>:build:production"
+            },
+            "development": {
+              "browserTarget": "<%= dasherize(name) %>:build:development"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "<%= dasherize(name) %>:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/<%= dasherize(name) %>/src/test.ts",
+            "polyfills": "projects/<%= dasherize(name) %>/src/polyfills.ts",
+            "tsConfig": "projects/<%= dasherize(name) %>/tsconfig.spec.json",
+            "karmaConfig": "projects/<%= dasherize(name) %>/karma.conf.js",
+            "inlineStyleLanguage": "scss",
+            "assets": [
+              "projects/<%= dasherize(name) %>/src/favicon.ico",
+              "projects/<%= dasherize(name) %>/src/assets"
+            ],
+            "styles": [
+              "projects/<%= dasherize(name) %>/src/styles.scss"
+            ],
+            "scripts": []
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "projects/<%= dasherize(name) %>/**/*.ts",
+              "projects/<%= dasherize(name) %>/**/*.html"
+            ]
+          }
+        },
+        "cypress-run": {
+          "builder": "@cypress/schematic:cypress",
+          "options": {
+            "devServerTarget": "<%= dasherize(name) %>:serve",
+            "configFile": "projects/<%= dasherize(name) %>/cypress.json"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "<%= dasherize(name) %>:serve:production"
+            }
+          }
+        },
+        "cypress-open": {
+          "builder": "@cypress/schematic:cypress",
+          "options": {
+            "watch": true,
+            "headless": false,
+            "configFile": "projects/<%= dasherize(name) %>/cypress.json"
+          }
+        },
+        "e2e": {
+          "builder": "@cypress/schematic:cypress",
+          "options": {
+            "devServerTarget": "<%= dasherize(name) %>:serve",
+            "watch": true,
+            "headless": false
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "<%= dasherize(name) %>:serve:production"
+            }
+          }
+        }
+      }
+    },
+    "@libs/utils": {
+      "projectType": "library",
+      "root": "projects/libs/utils",
+      "sourceRoot": "projects/libs/utils/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/libs/utils/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/libs/utils/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/libs/utils/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/libs/utils/src/test.ts",
+            "tsConfig": "projects/libs/utils/tsconfig.spec.json",
+            "karmaConfig": "projects/libs/utils/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "projects/libs/utils/**/*.ts",
+              "projects/libs/utils/**/*.html"
+            ]
+          }
+        }
+      }
+    },
+    "@libs/common": {
+      "projectType": "library",
+      "root": "projects/libs/common",
+      "sourceRoot": "projects/libs/common/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/libs/common/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/libs/common/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/libs/common/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/libs/common/src/test.ts",
+            "tsConfig": "projects/libs/common/tsconfig.spec.json",
+            "karmaConfig": "projects/libs/common/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "projects/libs/common/**/*.ts",
+              "projects/libs/common/**/*.html"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "defaultProject": "<%= dasherize(name) %>"
+}

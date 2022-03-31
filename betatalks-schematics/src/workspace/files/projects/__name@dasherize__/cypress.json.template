@@ -1,0 +1,9 @@
+{
+  "integrationFolder": "projects/<%= dasherize(name) %>/cypress/integration",
+  "supportFile": "projects/<%= dasherize(name) %>/cypress/support/index.ts",
+  "videosFolder": "projects/<%= dasherize(name) %>/cypress/videos",
+  "screenshotsFolder": "projects/<%= dasherize(name) %>/cypress/screenshots",
+  "pluginsFile": "projects/<%= dasherize(name) %>/cypress/plugins/index.ts",
+  "fixturesFolder": "projects/<%= dasherize(name) %>/cypress/fixtures",
+  "baseUrl": "http://localhost:4200"
+}

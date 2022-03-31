@@ -1,0 +1,5 @@
+# possibility to add your npm config
+
+# registry=url to private npm registry
+                        
+# always-auth=true

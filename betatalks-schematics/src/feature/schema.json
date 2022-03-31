@@ -1,0 +1,36 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "$id": "SchematicsFeatureModule",
+  "title": "feature module schema",
+  "type": "object",
+  "properties": {
+    "name": {
+      "description": "The name of the feature.",
+      "type": "string",
+      "format": "html-selector",
+      "$default": {
+        "$source": "argv",
+        "index": 0
+      },
+      "x-prompt": "What name would you like to use for the feature?"
+    },
+    "route": {
+      "type": "string",
+      "description": "The route of the lazy loaded feature.",
+      "x-prompt": "What will be the route of the module?"
+    },
+    "module": {
+      "type": "string",
+      "description": "The declaring NgModule.",
+      "alias": "m"
+    },
+    "project": {
+      "type": "string",
+      "description": "The name of the project.",
+      "$default": {
+        "$source": "projectName"
+      }
+    }
+  },
+  "required": ["name"]
+}
